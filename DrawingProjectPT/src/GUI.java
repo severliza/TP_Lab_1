@@ -50,6 +50,7 @@ class GUI extends JFrame {
 
         list.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
+                int n;
                 switch (list.getSelectedIndex()){
                     case 0:
                         drawingPanel.setFigureType(DrawingPanel.Figures.SEGMENT);
@@ -61,8 +62,10 @@ class GUI extends JFrame {
                         drawingPanel.setFigureType(DrawingPanel.Figures.LINE);
                         break;
                      case 3:
-                        drawingPanel.setFigureType(DrawingPanel.Figures.POLYLINE);
-                        break;
+                         n = Integer.parseInt(JOptionPane.showInputDialog("Number: "));
+                         drawingPanel.setCount(n);
+                         drawingPanel.setFigureType(DrawingPanel.Figures.POLYLINE);
+                         break;
                      case 4:
                         drawingPanel.setFigureType(DrawingPanel.Figures.CIRCLE);
                         break;
@@ -76,11 +79,15 @@ class GUI extends JFrame {
                         drawingPanel.setFigureType(DrawingPanel.Figures.TRIANGLE);
                         break;
                       case 8:
-                        drawingPanel.setFigureType(DrawingPanel.Figures.POLYGON);
-                        break;
+                          n = Integer.parseInt(JOptionPane.showInputDialog("Number: "));
+                          drawingPanel.setCount(n);
+                          drawingPanel.setFigureType(DrawingPanel.Figures.POLYGON);
+                          break;
                       case 9:
-                        drawingPanel.setFigureType(DrawingPanel.Figures.REGULARPOLYGON);
-                        break;
+                          n = Integer.parseInt(JOptionPane.showInputDialog("Number: "));
+                          drawingPanel.setCount(n);
+                          drawingPanel.setFigureType(DrawingPanel.Figures.REGULARPOLYGON);
+                          break;
                      case 10:
                         drawingPanel.setFigureType(DrawingPanel.Figures.RHOMB);
                         break;
@@ -117,32 +124,30 @@ class GUI extends JFrame {
         //--------------colors--------------------------------------
         JPanel colorPanel = new JPanel();
         drawPart.add(colorPanel, BorderLayout.NORTH);
-        JButton buttonRed = new JButton("Red");
-        colorPanel.add(buttonRed);
-        buttonRed.addActionListener(new ActionListener() {
+        JButton buttonColor = new JButton("Color");
+        colorPanel.add(buttonColor);
+        buttonColor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                drawingPanel.setColor(Color.RED);
+
+                Color c=JColorChooser.showDialog(content,"Choose color",Color.CYAN);
+                drawingPanel.setColor(c);
             }
         });
-        JButton buttonGreen = new JButton("Green");
-        colorPanel.add(buttonGreen);
-        buttonGreen.addActionListener(new ActionListener() {
+        JButton buttonBorderColor = new JButton("BorderColor");
+        colorPanel.add(buttonBorderColor);
+        buttonBorderColor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                drawingPanel.setColor(Color.GREEN);
-            }
-        });
-        JButton buttonBlue = new JButton("Blue");
-        colorPanel.add(buttonBlue);
-        buttonBlue.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                drawingPanel.setColor(Color.BLUE);
+
+                Color c=JColorChooser.showDialog(content,"Choose color",Color.CYAN);
+                drawingPanel.setBorderColor(c);
             }
         });
 
         content.add(drawPart);
+
+
 
         //-----------------menu------------------------------------------
 

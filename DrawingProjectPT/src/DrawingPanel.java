@@ -12,13 +12,15 @@ import java.util.ArrayList;
 public class DrawingPanel extends JPanel {
     private Frame frame;
     private Color color;
+    private Color borderColor;
     private ArrayList<Figure> figures;
     private int prevX, prevY;
     private boolean isDrawing;
-    //private int index;
     private Figures figureType;
     private boolean toMove;
     private int indexToMove;
+
+    private int count;
 
     public enum Figures {
         LINE , RAY, SEGMENT, POLYLINE, POLYGON, ELLIPSE, CIRCLE, RECTANGLE, REGULARPOLYGON, RHOMB, SQUARE, TRIANGLE
@@ -26,12 +28,13 @@ public class DrawingPanel extends JPanel {
 
     {
         color = Color.GREEN;
+        borderColor = Color.BLACK;
         figures = new ArrayList<>();
         isDrawing = false;
-        //index = 0;
         figureType = Figures.SEGMENT;
         toMove = false;
         indexToMove = -1;
+        count=5;
     }
 
     DrawingPanel(JFrame frame) {
@@ -42,12 +45,13 @@ public class DrawingPanel extends JPanel {
         addMouseMotionListener(new MouseMotionHandler());
     }
 
-    //public void setIndex(int index) { this.index = index; }
     public void setColor(Color color) {
         this.color = color;
     }
+    public void setBorderColor(Color borderColor) { this.borderColor = borderColor; }
     public void setToMove(boolean toMove) { this.toMove = toMove; }
     public void setFigureType(Figures figureType) { this.figureType = figureType; }
+    public void setCount(int count) { this.count = count; }
 
     private class MouseHandler extends MouseAdapter {
         @Override
@@ -59,40 +63,40 @@ public class DrawingPanel extends JPanel {
 
                 switch (figureType){
                     case SEGMENT:
-                        figures.add(new Segment(Color.BLACK, new Point(prevX, prevY), new Point(prevX, prevY)));
+                        figures.add(new Segment(borderColor, new Point(prevX, prevY), new Point(prevX, prevY)));
                         break;
                     case RAY:
-                        figures.add(new Ray(Color.BLACK, new Point(prevX, prevY), new Point(prevX, prevY)));
+                        figures.add(new Ray(borderColor, new Point(prevX, prevY), new Point(prevX, prevY)));
                         break;
                     case LINE:
-                        figures.add(new Line(Color.BLACK, new Point(prevX, prevY), new Point(prevX, prevY)));
+                        figures.add(new Line(borderColor, new Point(prevX, prevY), new Point(prevX, prevY)));
                         break;
                     case POLYLINE: //PolyLine!
-                        figures.add(new Ray(Color.BLACK, new Point(prevX, prevY), new Point(prevX, prevY)));
+                        figures.add(new Ray(borderColor, new Point(prevX, prevY), new Point(prevX, prevY)));
                         break;
                     case CIRCLE: //не отличается от элипса
-                        figures.add(new Circle(Color.BLACK, new Point(prevX, prevY), color, new Point(prevX, prevY)));
+                        figures.add(new Circle(borderColor, new Point(prevX, prevY), color, new Point(prevX, prevY)));
                         break;
                     case ELLIPSE:
-                        figures.add(new Ellipse(Color.BLACK, new Point(prevX, prevY), color, new Point(prevX, prevY)));
+                        figures.add(new Ellipse(borderColor, new Point(prevX, prevY), color, new Point(prevX, prevY)));
                         break;
                     case RECTANGLE:
-                        figures.add(new Rectangle(Color.BLACK, new Point(prevX, prevY), color, new Point(prevX, prevY)));
+                        figures.add(new Rectangle(borderColor, new Point(prevX, prevY), color, new Point(prevX, prevY)));
                         break;
                     case TRIANGLE: //triangle
-                        //figures.add(new Triangle(Color.BLACK, new Point(prevX, prevY), color, new Point(prevX, prevY)));
+                        //figures.add(new Triangle(borderColor, new Point(prevX, prevY), color, new Point(prevX, prevY)));
                         break;
                     case POLYGON: //polygon
-                        //figures.add(new Polygon(Color.BLACK, new Point(prevX, prevY), color, new Point(prevX, prevY)));
+                        //figures.add(new Polygon(borderColor, new Point(prevX, prevY), color, new Point(prevX, prevY)));
                         break;
                     case REGULARPOLYGON: //regularPolygon
-                        //figures.add(new RegularPolygon(Color.BLACK, new Point(prevX, prevY), color, new Point(prevX, prevY)));
+                        figures.add(new RegularPolygon(borderColor, new Point(prevX, prevY), color, new Point(prevX, prevY), count));
                         break;
                     case RHOMB: //rhomb
-                        figures.add(new Rhomb(Color.BLACK, new Point(prevX, prevY), color, new Point(prevX, prevY)));
+                        figures.add(new Rhomb(borderColor, new Point(prevX, prevY), color, new Point(prevX, prevY)));
                         break;
                     default:
-                        figures.add(new RegularPolygon(Color.BLACK, new Point(prevX, prevY), color, new Point(prevX, prevY), 5));
+                        figures.add(new RegularPolygon(borderColor, new Point(prevX, prevY), color, new Point(prevX, prevY), count));
                         break;
                 }
                 isDrawing = true;
